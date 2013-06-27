@@ -1,29 +1,34 @@
----
-title: rCharts NYT Interactive Home Price
-author: Timely Portfolio  (all credit to NYTimes)
-github: {user: timelyportfolio, repo: rCharts_nyt_home_price, branch: "gh-pages"}
-framework: bootstrap
-mode: selfcontained
-widgets: "nyt_home"
-highlighter: prettify
-hitheme: twitter-bootstrap
-lead : >
-  NYT's Home Price Visualization with rCharts
----
-
-# Disclaimer and Attribution
-
-**I claim absolutely no credit for this visualization, which I consider one of the most instructive I have ever seen.  If anybody believes this to be not fair use, I will take it down immediately.  I am implicitly assuming approval for this due to the interview http://datastori.es/data-stories-22-nyt-graphics-and-d3-with-mike-bostock-and-shan-carter/.** 
-
----
-# Another Favorite from NYT
-  
-
-
----
-# in rCharts
-
-<h1>Housing’s Rise and Fall in 20 Cities</h1>
+<!doctype HTML>
+<meta charset = 'utf-8'>
+<html>
+  <head>
+    {{# assets.css }}
+    <link rel='stylesheet' href='{{{ . }}}'>
+    {{/ assets.css }}
+    
+    {{# assets.jshead }}
+    <script src='{{{ . }}}' type='text/javascript'></script>
+    {{/ assets.jshead }}
+    
+    <style>
+    .rChart {
+      display: block;
+      margin-left: auto; 
+      margin-right: auto;
+      width: {{params.width}}px;
+      height: {{params.height}}px;
+    }  
+    </style>
+    
+  </head>
+  <body>
+    {{# chartId }}
+    <{{container}} id='{{chartId}}' class='rChart {{ lib }}'></{{container}}>  
+    {{/ chartId }}
+    
+    <h1>Housing's Rise and Fall in 20 Cities</h1>
+</div><!--close .storyHeader -->
+</div><!--end .module insetHFullWidth -->
 <div id="interactiveFreeFormMain">
 <link rel="stylesheet" type="text/css" href="http://graphics8.nytimes.com/newsgraphics/2013/05/28/case-shiller/2a8c44bdaf0703a2361add917782a6dd88c7d81e/base.css">
 <!--[if lte IE 8]>
@@ -63,21 +68,8 @@ it would be worth
 </table>
 </div>
 </div>
-```{r results = 'asis'}
-require(rCharts)
-
-p1 <- rCharts$new()
-p1$field(
-  "LIB",
-  list(url = paste0(getwd(),"/libraries/widgets/nyt_home"), name = "")
-)
-p1$field(
-  'templates', 
-  modifyList(
-    p1$templates,
-    list( #page = "rChart_nyt_home.html",
-      script = "libraries/widgets/nyt_home/layouts/nyt_home.html")
-  )
-)
-cat(noquote(p1$html()))
-```
+    
+    {{{ script }}}
+    
+  </body>
+</html>

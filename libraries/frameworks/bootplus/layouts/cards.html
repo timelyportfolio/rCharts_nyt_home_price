@@ -1,0 +1,19 @@
+<div class='container'>
+  <div class='row'>
+    {{# slide.blocks }}
+    <div class='span4'>
+      <div class='card'>
+        <h3 class='card-heading simple'>{{{ title }}}</h3>
+        <div class='card-body'>
+          {{{ content }}}
+        </div>
+        <div class='card-actions'>
+          <button class='btn btn-block' href={{{ href }}}>
+            View Details
+          </button>
+        </div>
+      </div>
+    </div>
+    {{/ slide.blocks }}
+  </div>
+</div>
