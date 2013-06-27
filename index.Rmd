@@ -9,5 +9,5 @@ ext_widgets: {rCharts: "libraries/dimple"}
 highlighter: prettify
 hitheme: twitter-bootstrap
 lead : >
-  dimplejs and rCharts Tutorial with US Treasury Yield Data
+  NYT's Home Price Vis with rCharts
 ---
