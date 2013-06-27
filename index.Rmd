@@ -1,0 +1,13 @@
+---
+title: rCharts NYT Interactive Home Price
+author: Timely Portfolio  (all credit to NYTimes)
+github: {user: timelyportfolio, repo: rCharts_nyt_home_price, branch: "gh-pages"}
+framework: bootplus
+layout: post
+mode: selfcontained
+ext_widgets: {rCharts: "libraries/dimple"}
+highlighter: prettify
+hitheme: twitter-bootstrap
+lead : >
+  dimplejs and rCharts Tutorial with US Treasury Yield Data
+---
