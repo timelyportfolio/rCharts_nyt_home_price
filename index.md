@@ -43,6 +43,7 @@ p1$field(
       script = "libraries/widgets/nyt_home/layouts/nyt_home.html")
   )
 )
+p1$set(description = "The Standard & Poor's Case-Shiller Home Price Index for 20 major metropolitan areas is one of the most closely watched gauges of the housing market. The figures for April were released June 25. Figures shown here are not seasonally adjusted or adjusted for inflation.")
 cat(noquote(p1$html()))
 ```
 
@@ -66,7 +67,7 @@ it would be worth
 <div class="g-table-container">
 <div class="g-table-intro">
 <h4>Behind the data </h4>
-<p class="g-table-readin">The Standard & Poor&rsquo;s Case-Shiller Home Price Index for 20 major metropolitan areas is one of the most closely watched gauges of the housing market. The figures for April were released June 25. Figures shown here are not seasonally adjusted or adjusted for inflation.</p>
+<p class="g-table-readin"></p>
 </div>
 <table class="g-table">
 <tr>
@@ -82,7 +83,17 @@ it would be worth
 
 <script>
 (function() {
-
+  var params = {
+ "dom": "chart31984c525ed",
+"width":    800,
+"height":    400,
+"description": "The Standard & Poor's Case-Shiller Home Price Index for 20 major metropolitan areas is one of the most closely watched gauges of the housing market. The figures for April were released June 25. Figures shown here are not seasonally adjusted or adjusted for inflation.",
+"id": "chart31984c525ed" 
+}
+  
+  //set description of the data
+  d3.select('.g-table-readin').text( params.description );
+  
   var nytMonths = {"Jan": "Jan.",
                    "Feb": "Feb.",
                    "Mar": "March",

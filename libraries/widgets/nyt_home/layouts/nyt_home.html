@@ -18,7 +18,7 @@ it would be worth
 <div class="g-table-container">
 <div class="g-table-intro">
 <h4>Behind the data </h4>
-<p class="g-table-readin">The Standard & Poor&rsquo;s Case-Shiller Home Price Index for 20 major metropolitan areas is one of the most closely watched gauges of the housing market. The figures for April were released June 25. Figures shown here are not seasonally adjusted or adjusted for inflation.</p>
+<p class="g-table-readin"></p>
 </div>
 <table class="g-table">
 <tr>
@@ -34,7 +34,11 @@ it would be worth
 
 <script>
 (function() {
-
+  var params = {{{ chartParams }}}
+  
+  //set description of the data provided in params
+  d3.select('.g-table-readin').text( params.description );
+  
   var nytMonths = {"Jan": "Jan.",
                    "Feb": "Feb.",
                    "Mar": "March",
@@ -151,34 +155,47 @@ it would be worth
       .tickSize(-width - margin.left - margin.right)
       .tickFormat(formatAxes);
 
-  queue()
-      .defer(d3.csv, "http://graphics8.nytimes.com/newsgraphics/2013/05/28/case-shiller/2a8c44bdaf0703a2361add917782a6dd88c7d81e/lookup2.csv")
-      .defer(d3.csv, "http://graphics8.nytimes.com/newsgraphics/2013/05/28/case-shiller/2a8c44bdaf0703a2361add917782a6dd88c7d81e/case-shiller-tiered2.csv")
-
-      .await(ready)
-
-  function ready(err, lookup, data) {
-
-    data.forEach(function(d) {
-      d.date = new Date(+d.year, +d.month -1, 1 )
-      d.val = +d.val;
-      d.high = +d.high;
-      d.low = +d.low;
-      d.mid = +d.mid;
+//  queue()
+//      .defer(d3.csv, "http://graphics8.nytimes.com/newsgraphics/2013/05/28/case-shiller/2a8c44bdaf0703a2361add917782a6dd88c7d81e/lookup2.csv")
+//      .defer(d3.csv, "http://graphics8.nytimes.com/newsgraphics/2013/05/28/case-shiller/2a8c44bdaf0703a2361add917782a6dd88c7d81e/case-shiller-tiered2.csv")
+//      .await(ready)
+//
+//  function ready(err, lookup, data) {
+    data = params.data;
+    
+    var dataArray = [];
+    
+    data[d3.keys(data)[0]].forEach(function(d,i) {
+      var dataItem = {};
+      d3.keys(data).forEach(function(dd) {
+        if(dd === 'date'){
+          dataItem[dd] = new Date(data[dd][i]);
+        } else dataItem[dd] = data[dd][i];
+      })
+      dataArray.push(dataItem);
     });
 
     cityNameByKey = {};
+    
+    //if lookup is undefined just get key:key for each unique
+    if (!(typeof(params.lookup) === 'undefined')) {
+      lookup = params.lookup;
+      lookup.forEach(function(d) {
+        cityNameByKey[d.code] = d.city;
+      });
+    } else {
+      lookup = d3.keys(d3.nest().key(function(d){return d.citycode}).map(dataArray));
+      lookup.forEach(function(d) {
+        cityNameByKey[d] = d;
+      });
+    };
 
-    lookup.forEach(function(d) {
-      cityNameByKey[d.code] = d.city;
-    });
-
-    x.domain(d3.extent(data, function(d) { return d.date; }));
+    x.domain(d3.extent(dataArray, function(d) { return d.date; }));
     y.domain([35, 300]);
 
     nested = d3.nest()
         .key(function(d) { return d.citycode; })
-        .entries(data);
+        .entries(dataArray);
 
 
     nested.forEach(function(city) {
@@ -661,6 +678,6 @@ it would be worth
             }
          });
     }
-  }
+  //}
 
 })()</script>
