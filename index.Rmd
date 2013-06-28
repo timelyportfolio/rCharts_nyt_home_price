@@ -17,6 +17,7 @@ assets:
 body{
   font-family: 'Oxygen', sans-serif;
   font-size: 16px;
+  line-height: 24px;
 }
 
 h1,h2,h3,h4 {
@@ -137,3 +138,4 @@ As I hope you can tell, this post was more a function of the efforts of others t
 Thanks specifically:
 - Ramnath Vaidyanathan for [rCharts](http://rcharts.io/site) and [slidify](http://slidify.org).
 - NYT Visualization Design Team for all their inspiring examples.
+- Google fonts [Raleway](http://www.google.com/fonts/specimen/Raleway) and [Oxygen](http://www.google.com/fonts/specimen/Oxygen)
