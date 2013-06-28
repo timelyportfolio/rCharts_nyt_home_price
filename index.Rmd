@@ -7,12 +7,19 @@ mode: selfcontained
 widgets: "nyt_home"
 highlighter: prettify
 hitheme: twitter-bootstrap
+assets:
+  css: "http://fonts.googleapis.com/css?family=Tangerine"
 ---
 
 <style>
+body {
+  font-family: 'Tangerine', serif;
+  font-size: 48px;
+}
+
 .container { width: 1000px; }
 h3 {
-  background-color: #eee;
+  background-color: #D4DAEC;
   text-indent: 100px; 
 }
 h4 {
