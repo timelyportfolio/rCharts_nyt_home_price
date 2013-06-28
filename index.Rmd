@@ -31,18 +31,9 @@ opts_chunk$set(message = FALSE, warning = FALSE, error = FALSE, tidy = FALSE, ca
 require(rCharts)
 
 p1 <- rCharts$new()
-p1$field(
-  "LIB",
-  list(url = paste0(getwd(),"/libraries/widgets/nyt_home"), name = "")
-)
-p1$field(
-  'templates', 
-  modifyList(
-    p1$templates,
-    list( #page = "rChart_nyt_home.html",
-      script = "libraries/widgets/nyt_home/layouts/nyt_home.html")
-  )
-)
+p1$setLib('libraries/widgets/nyt_home')
+p1$setTemplate(script = "libraries/widgets/nyt_home/layouts/nyt_home.html")
+
 p1$set(description = "The Standard & Poor's Case-Shiller Home Price Index for 20 major metropolitan areas is one of the most closely watched gauges of the housing market. The figures for April were released June 25. Figures shown here are not seasonally adjusted or adjusted for inflation.")
 
 #get the data and convert to a format that we would expect from melted xts
@@ -67,18 +58,9 @@ p1$set(groups = "citycode")
 
 ```{r results = 'asis'}
 p2 <- rCharts$new()
-p2$field(
-  "LIB",
-  list(url = paste0(getwd(),"/libraries/widgets/nyt_home"), name = "")
-)
-p2$field(
-  'templates', 
-  modifyList(
-    p1$templates,
-    list( #page = "rChart_nyt_home.html",
-      script = "libraries/widgets/nyt_home/layouts/nyt_home.html")
-  )
-)
+p2$setLib('libraries/widgets/nyt_home')
+p2$setTemplate(script = "libraries/widgets/nyt_home/layouts/nyt_home.html")
+
 p2$set(description = "This data comes from the managers dataset included in the R package PerformanceAnalytics.")
 
 #get the data and convert to a format that we would expect from melted xts

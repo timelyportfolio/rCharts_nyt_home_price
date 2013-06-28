@@ -116,8 +116,9 @@ it would be worth
       .range([height, 0]);
 
   var barScale = d3.scale.linear()
-      .range([0,75])
-      .domain([0,75])
+      .range([0,75]);
+      //set domain later with max
+      //.domain([0,75]);
 
   var line = d3.svg.line()
       .x(function(d) { return x(d.date); })
@@ -204,6 +205,7 @@ it would be worth
     y.domain(d3.extent(dataArray,function(d){return d.val;}));
     //pad the negative a little on y
     y.domain([50,y.domain()[1]]);
+    
 
     nested = d3.nest()
         .key(function(d) { return d[params.groups]; })
@@ -227,7 +229,9 @@ it would be worth
     nested.sort(function(a,b) {
       return b.yearOnYearChange - a.yearOnYearChange;
     });
-
+    
+    //set domains for each of the barScales
+    barScale.domain([0,d3.max(nested,function(d){return Math.abs(d.changeSinceBeginning)})*100]);
     var indexFromMouseX = d3.scale.linear()
         .domain([0, width])
         .rangeRound([1, nested[1].values.length - 1])
@@ -359,16 +363,16 @@ it would be worth
                var chg = 100 * d.yearOnYearChange;
               if (chg<0) {
                 var nudge = Math.abs(barScale(chg));
-                return (barScale.domain()[1] - nudge).toString() + "px";
+                return (barScale(barScale.domain()[1]) - nudge).toString() + "px";
               }
               else {
-                return barScale.domain()[1].toString() + "px";
+                return barScale(barScale.domain()[1]).toString() + "px";
               }
            });
 
       var zeroMarker3 = yearChangeBarContainer.append("div")
           .classed("g-zeromarker", true)
-          .style("left", barScale.domain()[1] + "px");
+          .style("left", barScale(barScale.domain()[1]) + "px");
 
       var peakMonthTd = rows.append("td")
           .classed("g-num-td", true)
@@ -392,16 +396,16 @@ it would be worth
              var chg = 100 * d.changeFromPeak;
             if (chg < 0) {
               var nudge = Math.abs(barScale(chg));
-              return (barScale.domain()[1] - nudge).toString() + "px";
+              return (barScale(barScale.domain()[1]) - nudge).toString() + "px";
             }
             else {
-              return barScale.domain()[1].toString() + "px";
+              return barScale(barScale.domain()[1]).toString() + "px";
             }
           });
 
       var zeroMarker2 = peakMonthBarContainer.append("div")
           .classed("g-zeromarker", true)
-          .style("left", barScale.domain()[1] + "px");
+          .style("left", barScale(barScale.domain()[1]) + "px");
 
       var changeSinceSelectedTd = rows.append("td")
           .classed("g-change-since-selected-td g-num-td", true);
@@ -417,7 +421,7 @@ it would be worth
 
       var zeroMarker = liveBarContainer.append("div")
           .classed("g-zeromarker", true)
-          .style("left", barScale.domain()[1] + "px");
+          .style("left", barScale(barScale.domain()[1]) + "px");
     }
 
 
@@ -680,13 +684,13 @@ it would be worth
 
             if (chg < 0) {
               var nudge = Math.abs(barScale(chg));
-              return (barScale.domain()[1] - nudge).toString() + "px";
+              return (barScale(barScale.domain()[1]) - nudge).toString() + "px";
               // what fraction of the width in pixels is this?
               var nudge = starterBarWidth * Math.abs(chg)/100;
               return (starterBarWidth - nudge).toString() + "px";
             }
             else {
-              return barScale.domain()[1].toString() + "px";
+              return barScale(barScale.domain()[1]).toString() + "px";
             }
          });
     }
