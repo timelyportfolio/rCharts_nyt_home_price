@@ -113,7 +113,7 @@ it would be worth
       .range([0, width]);
 
   var y = d3.scale.log()
-      .range([height, 0]);
+      .range([height, 20]);
 
   var barScale = d3.scale.linear()
       .range([0,75]);
@@ -141,7 +141,7 @@ it would be worth
 
     sliderHandle.append("img")
       .attr("class", "g-slider-handle-icon")
-      .attr("src", "http://graphics8.nytimes.com/newsgraphics/2013/05/28/case-shiller/2a8c44bdaf0703a2361add917782a6dd88c7d81e/handle@2x.png")
+      .attr("src", "libraries/widgets/nyt_home/css/handle@2x.png")
 
   var svg = d3.select(".g-chart").append("svg")
       .attr("width", width + margin.left + margin.right)
@@ -201,12 +201,6 @@ it would be worth
       });
     };
 
-    x.domain(d3.extent(dataArray, function(d) { return d.date; }));
-    y.domain(d3.extent(dataArray,function(d){return d.val;}));
-    //pad the negative a little on y
-    y.domain([50,y.domain()[1]]);
-    
-
     nested = d3.nest()
         .key(function(d) { return d[params.groups]; })
         .entries(dataArray);
@@ -229,6 +223,9 @@ it would be worth
     nested.sort(function(a,b) {
       return b.yearOnYearChange - a.yearOnYearChange;
     });
+    
+    x.domain(d3.extent(dataArray, function(d) { return d.date; }));
+    y.domain([50,d3.max(dataArray, function(d){return d.val}) * 1.2]); 
     
     //set domains for each of the barScales
     barScale.domain([0,d3.max(nested,function(d){return Math.abs(d.changeSinceBeginning)})*100]);
@@ -307,7 +304,7 @@ it would be worth
 
     var mostRecentMonth = slider.append("div")
         .classed("g-most-recent-month", true)
-        .html("...to <b>" + "April 2013" + "</b>");
+        .html("...to <b>" + d3.time.format("%b %Y")(nested[0].updatedMonth) + "</b>");
 
     var endpoint = svg.append("g")
         .attr("class", "g-endpoint")
