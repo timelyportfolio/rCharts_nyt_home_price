@@ -304,6 +304,8 @@ circle {
 .g-table-intro h4 {
  font-size: 14px;
  margin-bottom: 10px;
+ text-indent: 0px;
+ font-family: arial, sans-serif;
 }
 .g-table-readin {
   font-size: 13px;

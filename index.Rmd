@@ -8,13 +8,19 @@ widgets: "nyt_home"
 highlighter: prettify
 hitheme: twitter-bootstrap
 assets:
-  css: "http://fonts.googleapis.com/css?family=Tangerine"
+  css:
+    - "http://fonts.googleapis.com/css?family=Raleway:300"
+    - "http://fonts.googleapis.com/css?family=Oxygen"
 ---
 
 <style>
-body {
-  font-family: 'Tangerine', serif;
-  font-size: 48px;
+body{
+  font-family: 'Oxygen', sans-serif;
+  font-size: 16px;
+}
+
+h1,h2,h3,h4 {
+  font-family: 'Raleway', sans-serif;
 }
 
 .container { width: 1000px; }
@@ -94,8 +100,6 @@ p1$set(groups = "citycode")
 
 <h4>Get Data and Transform</h4>
 ```{r}
-require(rCharts)
-
 #get the data and convert to a format that we would expect from melted xts
 #will be typical
 #also original only uses a single value (val) and not other 
@@ -114,13 +118,16 @@ managers.melt[,"date"] <- format(managers.melt[,"date"],format = "%Y-%m-%d")
 
 <h4>Draw The Graph</h4>
 ```{r}
+require(rCharts)
 p2 <- rCharts$new()
 p2$setLib('libraries/widgets/nyt_home')
 p2$setTemplate(script = "libraries/widgets/nyt_home/layouts/nyt_home.html")
 
-p2$set(description = "This data comes from the managers dataset included in the R package PerformanceAnalytics.")
-p2$set(data = managers.melt)
-p2$set(groups = "manager")
+p2$set(
+  description = "This data comes from the managers dataset included in the R package PerformanceAnalytics.",
+  data = managers.melt,
+  groups = "manager"
+)
 cat(noquote(p2$html()))
 ```
 
