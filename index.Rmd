@@ -10,10 +10,22 @@ hitheme: twitter-bootstrap
 ---
 
 <style>
-.container { width: 980px; }
+.container { width: 1000px; }
+h3 {
+  background-color: #eee;
+  text-indent: 100px; 
+}
+h4 {
+  text-indent: 100px;
+}
+
+g-table-intro h4 {
+  text-indent: 0px;
+}
+
 </style>
 
-# Great NYT Interactive Vis Reusable with rCharts
+# Great NYT Interactive Reusable with rCharts
 
 ---
 <br/>
@@ -31,8 +43,10 @@ opts_chunk$set(message = FALSE, warning = FALSE, error = FALSE, tidy = FALSE, ca
   
 I think we all know the [data visualization team at NYT](http://blog.visual.ly/10-things-you-can-learn-from-the-new-york-times-data-visualizations/) is simply amazing.  Earlier this year in my post [d3 <- R with rCharts and slidify](http://timelyportfolio.blogspot.com/2013/04/d3-r-with-rcharts-and-slidify.html) I adapted and recreated the [512 Paths to the White House](http://www.nytimes.com/interactive/2012/11/02/us/politics/paths-to-the-white-house.html) to work with `R` data through [`rCharts`](http://rcharts.io/site).  Unfortunately, I was not creative enough to think of other data sets to plug into the visualization.  When Scott Murray tweeted, 
 
+<br/>
 <blockquote class="twitter-tweet"><p>Over at <a href="https://twitter.com/nytgraphics">@nytgraphics</a>, <a href="https://twitter.com/KevinQ">@KevinQ</a> and <a href="https://twitter.com/shancarter">@shancarter</a> really know how to wiggle a baseline. <a href="http://t.co/gS9gHrSLIu">http://t.co/gS9gHrSLIu</a></p>&mdash; Scott Murray (@alignedleft) <a href="https://twitter.com/alignedleft/statuses/349647895122804738">June 25, 2013</a></blockquote>
 <script async src="http://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<br/>
 
 I immediately knew the [Case Shiller Home Price Index visualization](http://www.nytimes.com/interactive/2011/05/31/business/economy/case-shiller-index.html) would be perfect for reuse with any cumulative growth time series data.   This is a bit of a hack of `rCharts` and should not be considered best practices, but it is a demonstration of the very flexible design of the package.  In the spirit of this [discussion](http://datastori.es/data-stories-23-inspiration-or-plagiarism/), I did not want to just copy entirely.  I was able to add a couple key innovations to the visualization:
 
@@ -70,15 +84,9 @@ p1$set(groups = "citycode")
 #cat(noquote(p1$html()))
 ```
 
-
-```{r results = 'asis'}
+<h4>Get Data and Transform</h4>
+```{r}
 require(rCharts)
-
-p2 <- rCharts$new()
-p2$setLib('libraries/widgets/nyt_home')
-p2$setTemplate(script = "libraries/widgets/nyt_home/layouts/nyt_home.html")
-
-p2$set(description = "This data comes from the managers dataset included in the R package PerformanceAnalytics.")
 
 #get the data and convert to a format that we would expect from melted xts
 #will be typical
@@ -94,6 +102,15 @@ managers.melt <- melt(
 )
 colnames(managers.melt) <- c("date", "manager","val")
 managers.melt[,"date"] <- format(managers.melt[,"date"],format = "%Y-%m-%d")
+```
+
+<h4>Draw The Graph</h4>
+```{r}
+p2 <- rCharts$new()
+p2$setLib('libraries/widgets/nyt_home')
+p2$setTemplate(script = "libraries/widgets/nyt_home/layouts/nyt_home.html")
+
+p2$set(description = "This data comes from the managers dataset included in the R package PerformanceAnalytics.")
 p2$set(data = managers.melt)
 p2$set(groups = "manager")
 cat(noquote(p2$html()))

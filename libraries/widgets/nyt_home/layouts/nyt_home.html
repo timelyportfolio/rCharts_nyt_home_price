@@ -19,7 +19,7 @@ it would be worth
 <div class="g-chart"></div>
 <div class="g-table-container">
 <div class="g-table-intro">
-<h4>Behind the data </h4>
+<h4 style = "text-indent:0px;">Behind the data </h4>
 <p class="g-table-readin"></p>
 </div>
 <table class="g-table">
@@ -99,7 +99,7 @@ it would be worth
       currentCity,
       hoverCity,
       currentDateIndex,
-      defaultDateIndex = 39, //TODO Calculate it!
+      defaultDateIndex = 12, //TODO Calculate it!
       currentPriceTier = "val";
 
   var formatAxes = function(d) {
@@ -470,6 +470,8 @@ it would be worth
           .attr("value", function(d) { return d[1]; })
     });
 
+    // change to 12 periods; need to generalize
+    //NYT comments below
     // TODO make this find the 10-year index instead of hardcode 41 and animate it
     // selectDateWithIndex(1);
     selectCity(defaultCity);
