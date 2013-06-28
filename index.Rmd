@@ -13,7 +13,7 @@ lead : >
 
 # Disclaimer and Attribution
 
-**I claim absolutely no credit for this visualization, which I consider one of the most instructive I have ever seen.  If anybody believes this to be not fair use, I will take it down immediately.  I am implicitly assuming approval for this due to the interview http://datastori.es/data-stories-22-nyt-graphics-and-d3-with-mike-bostock-and-shan-carter/.** 
+**I claim absolutely no credit for this visualization, which I consider one of the most instructive I have ever seen.  All credit belongs to the <a href = "http://www.nytimes.com/interactive/2011/05/31/business/economy/case-shiller-index.html" >original source</a>.  If anybody believes this to be not fair use, I will take it down immediately.  I am implicitly assuming approval for this fork due to the <a href = "http://datastori.es/data-stories-22-nyt-graphics-and-d3-with-mike-bostock-and-shan-carter/">interview</a>.** 
 
 ```{r echo=F, warning= F, message=F}
 opts_chunk$set(message = FALSE, warning = FALSE, error = FALSE, tidy = FALSE, cache = FALSE,results = 'asis' )
@@ -58,5 +58,43 @@ colnames(data.melt) <- c("date",colnames(data.melt)[-1])
 
 
 p1$set(data = data.melt)
-cat(noquote(p1$html()))
+p1$set(groups = "citycode")
+#cat(noquote(p1$html()))
+```
+
+---
+# Now With Our Own Data
+
+```{r results = 'asis'}
+p2 <- rCharts$new()
+p2$field(
+  "LIB",
+  list(url = paste0(getwd(),"/libraries/widgets/nyt_home"), name = "")
+)
+p2$field(
+  'templates', 
+  modifyList(
+    p1$templates,
+    list( #page = "rChart_nyt_home.html",
+      script = "libraries/widgets/nyt_home/layouts/nyt_home.html")
+  )
+)
+p2$set(description = "This data comes from the managers dataset included in the R package PerformanceAnalytics.")
+
+#get the data and convert to a format that we would expect from melted xts
+#will be typical
+#also original only uses a single value (val) and not other 
+require(reshape2)
+require(PerformanceAnalytics)
+
+data(managers)
+managers.melt <- melt(
+  data.frame( index( managers ), coredata(cumprod( managers+1 )*100 ) ),
+  id.vars = 1
+)
+colnames(managers.melt) <- c("date", "manager","val")
+managers.melt[,"date"] <- format(managers.melt[,"date"],format = "%Y-%m-%d")
+p2$set(data = managers.melt)
+p2$set(groups = "manager")
+cat(noquote(p2$html()))
 ```

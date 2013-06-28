@@ -1,3 +1,5 @@
+<!--Attribution:NYT Interactive http://www.nytimes.com/interactive/2011/05/31/business/economy/case-shiller-index.html-->
+
 <div id="interactiveFreeFormMain">
 <div class="g-shell">
 <div class="g-tooltip">
@@ -22,7 +24,7 @@ it would be worth
 </div>
 <table class="g-table">
 <tr>
-<th class="g-proper-city">City</th>
+<th class="g-proper-city"></th>
 <th class="g-yoy-chg" colspan="2">Year-over-year change</th>
 <th class="g-peak-month-td" colspan="2">Since peak</th>
 <th class="g-change-since-selected" colspan="2"> <span class="g-date-compare">Since Jan. 2000</span></th>
@@ -38,6 +40,14 @@ it would be worth
   
   //set description of the data provided in params
   d3.select('.g-table-readin').text( params.description );
+  //http://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
+  function toTitleCase(str)
+    {
+        return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    }
+  
+  //set table heading to groups
+  d3.select('.g-proper-city').text( toTitleCase(params.groups) );
   
   var nytMonths = {"Jan": "Jan.",
                    "Feb": "Feb.",
@@ -85,7 +95,7 @@ it would be worth
       formatNumberWords = d3.format("0f"),
       formatPercentChange2 = function(d) { return d/100},
       formatFullYear = d3.time.format("%Y"),
-      defaultCity = "SPCS20R",
+      defaultCity = params.data[params.groups][0],
       currentCity,
       hoverCity,
       currentDateIndex,
@@ -151,7 +161,7 @@ it would be worth
       .scale(y)
       .orient("left")
       .ticks(7)
-      .tickValues( [ 35, 50, 75, 100, 150, 200, 250] )
+//      .tickValues( [ 35, 50, 75, 100, 150, 200, 250] )
       .tickSize(-width - margin.left - margin.right)
       .tickFormat(formatAxes);
 
@@ -184,17 +194,19 @@ it would be worth
         cityNameByKey[d.code] = d.city;
       });
     } else {
-      lookup = d3.keys(d3.nest().key(function(d){return d.citycode}).map(dataArray));
+      lookup = d3.keys(d3.nest().key(function(d){return d[params.groups]}).map(dataArray));
       lookup.forEach(function(d) {
         cityNameByKey[d] = d;
       });
     };
 
     x.domain(d3.extent(dataArray, function(d) { return d.date; }));
-    y.domain([35, 300]);
+    y.domain(d3.extent(dataArray,function(d){return d.val;}));
+    //pad the negative a little on y
+    y.domain([50,y.domain()[1]]);
 
     nested = d3.nest()
-        .key(function(d) { return d.citycode; })
+        .key(function(d) { return d[params.groups]; })
         .entries(dataArray);
 
 
@@ -426,14 +438,14 @@ it would be worth
     dropDowns.set("city", {
       class:".g-city-selector",
       data:nested.map(function(d) {
-
-        if(d.key == "SPCS20R") {
-          return ["a major city", d.key ];
-        }
-        else {
+//
+//        if(d.key == "SPCS20R") {
+//          return ["a major city", d.key ];
+//        }
+//        else {
           return [cityNameByKey[d.key], d.key];
-
-        }
+//
+ //       }
 
       }).sort(),
       change: selectCity
