@@ -15,6 +15,10 @@ lead : >
 
 **I claim absolutely no credit for this visualization, which I consider one of the most instructive I have ever seen.  If anybody believes this to be not fair use, I will take it down immediately.  I am implicitly assuming approval for this due to the interview http://datastori.es/data-stories-22-nyt-graphics-and-d3-with-mike-bostock-and-shan-carter/.** 
 
+```{r echo=F, warning= F, message=F}
+opts_chunk$set(message = FALSE, warning = FALSE, error = FALSE, tidy = FALSE, cache = FALSE,results = 'asis' )
+```
+
 ---
 # Another Favorite from NYT
   

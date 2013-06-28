@@ -1,4 +1,5 @@
 nyt_home:
+  css: [css/base.css]
   jshead: [js/d3.v3.js,js/queue.js]
   cdn:
     jshead: 

@@ -28,7 +28,8 @@
   <script src="libraries/frameworks/bootstrap/js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="libraries/frameworks/bootstrap/js/vendor/jquery-1.8.2.min.js"><\/script>')</script>
-    
+    <link rel=stylesheet href="libraries/widgets/nyt_home/css/base.css"></link>
+
   <script src="libraries/widgets/nyt_home/js/d3.v3.js"></script>
 <script src="libraries/widgets/nyt_home/js/queue.js"></script>
 
@@ -54,13 +55,22 @@
 <pre><code class="r">require(rCharts)
 
 p1 &lt;- rCharts$new()
-p1$field(&quot;LIB&quot;, list(url = paste0(getwd(), &quot;/libraries/widgets/nyt_home&quot;), name = &quot;&quot;))
-p1$field(&quot;templates&quot;, modifyList(p1$templates, list(script = &quot;libraries/widgets/nyt_home/layouts/nyt_home.html&quot;)))
+p1$field(
+  &quot;LIB&quot;,
+  list(url = paste0(getwd(),&quot;/libraries/widgets/nyt_home&quot;), name = &quot;&quot;)
+)
+p1$field(
+  &#39;templates&#39;, 
+  modifyList(
+    p1$templates,
+    list( #page = &quot;rChart_nyt_home.html&quot;,
+      script = &quot;libraries/widgets/nyt_home/layouts/nyt_home.html&quot;)
+  )
+)
 cat(noquote(p1$html()))
 </code></pre>
 
 <div id="interactiveFreeFormMain">
-<link rel="stylesheet" type="text/css" href="http://graphics8.nytimes.com/newsgraphics/2013/05/28/case-shiller/2a8c44bdaf0703a2361add917782a6dd88c7d81e/base.css">
 <div class="g-shell">
 <div class="g-tooltip">
 <span class="g-playername-tooltip"></span>
@@ -70,8 +80,6 @@ cat(noquote(p1$html()))
 
 <h5 class="g-intro-sentence">
 If you bought
-<!--<span class="g-selector g-price-selector"></span> -->
-in
 <span class="g-selector g-city-selector"></span>
 around
 <span class="g-selector g-month-selector"></span>

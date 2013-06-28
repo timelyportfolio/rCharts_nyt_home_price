@@ -15,6 +15,9 @@ lead : >
 
 **I claim absolutely no credit for this visualization, which I consider one of the most instructive I have ever seen.  If anybody believes this to be not fair use, I will take it down immediately.  I am implicitly assuming approval for this due to the interview http://datastori.es/data-stories-22-nyt-graphics-and-d3-with-mike-bostock-and-shan-carter/.** 
 
+
+
+
 ---
 # Another Favorite from NYT
   
@@ -28,13 +31,22 @@ lead : >
 require(rCharts)
 
 p1 <- rCharts$new()
-p1$field("LIB", list(url = paste0(getwd(), "/libraries/widgets/nyt_home"), name = ""))
-p1$field("templates", modifyList(p1$templates, list(script = "libraries/widgets/nyt_home/layouts/nyt_home.html")))
+p1$field(
+  "LIB",
+  list(url = paste0(getwd(),"/libraries/widgets/nyt_home"), name = "")
+)
+p1$field(
+  'templates', 
+  modifyList(
+    p1$templates,
+    list( #page = "rChart_nyt_home.html",
+      script = "libraries/widgets/nyt_home/layouts/nyt_home.html")
+  )
+)
 cat(noquote(p1$html()))
 ```
 
 <div id="interactiveFreeFormMain">
-<link rel="stylesheet" type="text/css" href="http://graphics8.nytimes.com/newsgraphics/2013/05/28/case-shiller/2a8c44bdaf0703a2361add917782a6dd88c7d81e/base.css">
 <div class="g-shell">
 <div class="g-tooltip">
 <span class="g-playername-tooltip"></span>
@@ -43,8 +55,6 @@ cat(noquote(p1$html()))
 </div>
 <h5 class="g-intro-sentence">
 If you bought
-<!--<span class="g-selector g-price-selector"></span> -->
-in
 <span class="g-selector g-city-selector"></span>
 around
 <span class="g-selector g-month-selector"></span>
