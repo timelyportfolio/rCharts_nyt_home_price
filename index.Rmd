@@ -22,10 +22,11 @@ h4 {
 g-table-intro h4 {
   text-indent: 0px;
 }
-
 </style>
 
-# Great NYT Interactive Reusable with rCharts
+<a href="https://github.com/timelyportfolio/rCharts_nyt_home_price"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+# Great NYT Interactive -- Now Reusable with rCharts
 
 ---
 <br/>
@@ -115,3 +116,10 @@ p2$set(data = managers.melt)
 p2$set(groups = "manager")
 cat(noquote(p2$html()))
 ```
+
+### Thanks
+As I hope you can tell, this post was more a function of the efforts of others than of my own.
+
+Thanks specifically:
+- Ramnath Vaidyanathan for [rCharts](http://rcharts.io/site) and [slidify](http://slidify.org).
+- NYT Visualization Design Team for all their inspiring examples.
