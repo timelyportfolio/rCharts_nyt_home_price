@@ -207,13 +207,13 @@ it would be worth
 
 
     nested.forEach(function(city) {
-      city.updatedMonth = city.values[nested[1].values.length-1].date;
-      city.mostRecentValue = city.values[nested[1].values.length-1].val;
+      city.updatedMonth = city.values[nested[0].values.length-1].date;
+      city.mostRecentValue = city.values[nested[0].values.length-1].val;
       city.maxVal = d3.max(city.values, function(d) { return d.val;});
       city.peakidx = city.values.map(function(d) { return d.val}).indexOf(city.maxVal);
       city.peakMonth = city.values.map(function(d) { return d.date})[city.peakidx];
-      city.yearAgoDate = city.values[nested[1].values.length-13].date;
-      city.yearAgoVal = city.values[nested[1].values.length-13].val;
+      city.yearAgoDate = city.values[nested[0].values.length-13].date;
+      city.yearAgoVal = city.values[nested[0].values.length-13].val;
       city.yearOnYearChange = (city.mostRecentValue - city.yearAgoVal) / city.yearAgoVal;
       city.changeFromPeak = (city.mostRecentValue - city.maxVal)/(city.maxVal);
       city.changeSinceBeginning = (city.mostRecentValue - city.values[0].val)/city.values[0].val;
@@ -231,7 +231,7 @@ it would be worth
     barScale.domain([0,d3.max(nested,function(d){return Math.abs(d.changeSinceBeginning)})*100]);
     var indexFromMouseX = d3.scale.linear()
         .domain([0, width])
-        .rangeRound([1, nested[1].values.length - 1])
+        .rangeRound([1, nested[0].values.length - 1])
         .clamp(true)
 
     svg.append("rect")
