@@ -2,9 +2,11 @@
 #1. the original Shiller 20 home price indices
 #2. managers dataset included with R package performance analytics
 
-#Although the cumulative growth transformation/formula is
-#most commonly seen in finance, business, economics, there
-#are various other potential applications.  Here is one interesting
+#The cumulative growth transformation/formula is
+#most commonly seen in time series from 
+#finance, business, and economics.  There
+#are various other potential applications.
+#Here is one interesting
 #use of cumulative growth http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2909426/.
 #Exponential growth series demonstrated in network analysis,
 #biochemistry, agriculture could also work in this context.
